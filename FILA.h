@@ -60,25 +60,20 @@ Fila* CriaFila ()
     return f;
 }
 
-Nos* ins_fim (Nos *fim, int id,char nome[],char especie[],int idade,data auxda,int prio)
+Nos* ins_fim (Nos *fim, pet cad)
 {
     Nos *p = (Nos*)malloc(sizeof(Nos));
-    p->dados.id=id;
-    strcpy(p->dados.nome, nome);
-    strcpy(p->dados.especie, especie);
-    p->dados.idade=idade;
-    p->dados.nas=auxda;
-    p->dados.prioridade=prio;
+    p->dados=cad;
     p->prox = NULL;
     if (fim != NULL) /* verifica se lista não estava vazia */
         fim->prox = p;
     return p;
 }
 
-void InsereFila (Fila* f, int id,char nome[],char especie[],int idade,data auxda,int prio)
+void InsereFila (Fila* f, pet cad)
 {
 
-    f->fim = ins_fim(f->fim,id,nome,especie,idade,auxda,prio);
+    f->fim = ins_fim(f->fim,cad);
     if (f->ini==NULL) /* fila antes vazia? */
         f->ini = f->fim;
 }
