@@ -191,7 +191,7 @@ int main()
     Fila *normal = CriaFila(), *emer = CriaFila(), *atendidos = CriaFila();
     int opcao, id;
     pet aux, cad;
-    setlocale(LC_ALL, "Portuguese");
+    setlocale(LC_ALL,"Portuguese");
     srand(time(NULL));
     printf("\n\n\n\n\t\t\t\t=============================================\n");
     printf("\t\t\t\t        BEM-VINDO(A) À CLÍNICA VETERINÁRIA    \n");
@@ -323,7 +323,7 @@ int main()
 
         case 5:
             fflush(stdin);
-            system("cls");      
+            system("cls");
             printf("\nPróximo pet a ser atendido:\n\n");
             if (VaziaFila(emer) && VaziaFila(normal))
             {

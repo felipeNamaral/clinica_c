@@ -110,7 +110,7 @@ void imprimeFila (Fila* f)
     printf("\n\t\t");
     for (q=f->ini; q!=NULL; q=q->prox)
     {
-        printf("%-5d | %-15s | %-10s | %-5d | %02d/%02d/%04d | %s\n",
+        printf("%-5d | %-15s | %-10s | %-5d | %02d/%02d/%04d | %s\n\t\t",
                q->dados.id, q->dados.nome, q->dados.especie, q->dados.idade, q->dados.nas.dia, q->dados.nas.mes, q->dados.nas.ano,
                q->dados.prioridade == 1 ? "Urgente" : "Normal");;
     }
