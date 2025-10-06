@@ -64,6 +64,14 @@ void imprimirFilas(Fila *N, Fila *E)
     system("pause");
 }
 
+void imprimebusc(Nos *auxx)
+{
+    printf("%-5d | %-15s | %-10s | %-5d | %02d/%02d/%04d | %s\n",
+           auxx->dados.id, auxx->dados.nome, auxx->dados.especie, auxx->dados.idade,
+           auxx->dados.nas.dia, auxx->dados.nas.mes, auxx->dados.nas.ano,
+           auxx->dados.prioridade == 1 ? "Urgente" : "Normal");
+}
+
 void buscaPet(Fila *N, Fila *E, Fila *A)
 {
 
@@ -83,6 +91,10 @@ void buscaPet(Fila *N, Fila *E, Fila *A)
         tam = strlen(nome);
         for (int i = 0; i < tam; i++)
         {
+            nome[i]=tolower(nome[i]);
+        }
+        for (int i = 0; i < tam; i++)
+        {
             if (!isdigit(nome[i]))
             {
                 aux = 1;
@@ -99,10 +111,7 @@ void buscaPet(Fila *N, Fila *E, Fila *A)
                 if (auxx->dados.id == id)
                 {
                     printf("\nPet encontrado na fila normal:\n");
-                    printf("%-5d | %-15s | %-10s | %-5d | %02d/%02d/%04d | %s\n",
-                           auxx->dados.id, auxx->dados.nome, auxx->dados.especie, auxx->dados.idade,
-                           auxx->dados.nas.dia, auxx->dados.nas.mes, auxx->dados.nas.ano,
-                           auxx->dados.prioridade == 1 ? "Urgente" : "Normal");
+                    imprimebusc(auxx);
                     return;
                 }
                 auxx = auxx->prox;
@@ -113,10 +122,7 @@ void buscaPet(Fila *N, Fila *E, Fila *A)
                 if (auxx->dados.id == id)
                 {
                     printf("\nPet encontrado na fila de emergencia:\n");
-                    printf("%-5d | %-15s | %-10s | %-5d | %02d/%02d/%04d | %s\n",
-                           auxx->dados.id, auxx->dados.nome, auxx->dados.especie, auxx->dados.idade,
-                           auxx->dados.nas.dia, auxx->dados.nas.mes, auxx->dados.nas.ano,
-                           auxx->dados.prioridade == 1 ? "Urgente" : "Normal");
+                    imprimebusc(auxx);
                     return;
                 }
                 auxx = auxx->prox;
@@ -127,10 +133,7 @@ void buscaPet(Fila *N, Fila *E, Fila *A)
                 if (auxx->dados.id == id)
                 {
                     printf("\nPet encontrado na fila de atendidos:\n");
-                    printf("%-5d | %-15s | %-10s | %-5d | %02d/%02d/%04d | %s\n",
-                           auxx->dados.id, auxx->dados.nome, auxx->dados.especie, auxx->dados.idade,
-                           auxx->dados.nas.dia, auxx->dados.nas.mes, auxx->dados.nas.ano,
-                           auxx->dados.prioridade == 1 ? "Urgente" : "Normal");
+                    imprimebusc(auxx);
                     return;
                 }
                 auxx = auxx->prox;
@@ -141,13 +144,10 @@ void buscaPet(Fila *N, Fila *E, Fila *A)
             auxx = N->ini;
             while (auxx != NULL)
             {
-                if (stricmp(auxx->dados.nome, nome) == 0)
+                if (strcmp(auxx->dados.nome, nome) == 0)
                 {
                     printf("\nPet encontrado na fila normal:\n");
-                    printf("%-5d | %-15s | %-10s | %-5d | %02d/%02d/%04d | %s\n",
-                           auxx->dados.id, auxx->dados.nome, auxx->dados.especie, auxx->dados.idade,
-                           auxx->dados.nas.dia, auxx->dados.nas.mes, auxx->dados.nas.ano,
-                           auxx->dados.prioridade == 1 ? "Urgente" : "Normal");
+                    imprimebusc(auxx);
                     return;
                 }
                 auxx = auxx->prox;
@@ -155,13 +155,10 @@ void buscaPet(Fila *N, Fila *E, Fila *A)
             auxx = E->ini;
             while (auxx != NULL)
             {
-                if (stricmp(auxx->dados.nome, nome) == 0)
+                if (strcmp(auxx->dados.nome, nome) == 0)
                 {
                     printf("\nPet encontrado na fila de emergencia:\n");
-                    printf("%-5d | %-15s | %-10s | %-5d | %02d/%02d/%04d | %s\n",
-                           auxx->dados.id, auxx->dados.nome, auxx->dados.especie, auxx->dados.idade,
-                           auxx->dados.nas.dia, auxx->dados.nas.mes, auxx->dados.nas.ano,
-                           auxx->dados.prioridade == 1 ? "Urgente" : "Normal");
+                    imprimebusc(auxx);
                     return;
                 }
                 auxx = auxx->prox;
@@ -169,13 +166,10 @@ void buscaPet(Fila *N, Fila *E, Fila *A)
             auxx = A->ini;
             while (auxx != NULL)
             {
-                if (stricmp(auxx->dados.nome, nome) == 0)
+                if (strcmp(auxx->dados.nome, nome) == 0)
                 {
                     printf("\nPet encontrado na fila de atendidos:\n");
-                    printf("%-5d | %-15s | %-10s | %-5d | %02d/%02d/%04d | %s\n",
-                           auxx->dados.id, auxx->dados.nome, auxx->dados.especie, auxx->dados.idade,
-                           auxx->dados.nas.dia, auxx->dados.nas.mes, auxx->dados.nas.ano,
-                           auxx->dados.prioridade == 1 ? "Urgente" : "Normal");
+                    imprimebusc(auxx);
                     return;
                 }
                 auxx = auxx->prox;
@@ -185,17 +179,37 @@ void buscaPet(Fila *N, Fila *E, Fila *A)
     }
 }
 
+int idade(data aux)
+{
+    int idade;
+    time_t agr = time(NULL);
+    struct tm *data_atual = localtime(&agr);
+    int dia = data_atual->tm_mday;
+    int mes = data_atual->tm_mon + 1;
+    int ano = data_atual->tm_year + 1900;
+
+
+    idade = ano - aux.ano;
+    if (mes < aux.mes || (mes == aux.mes && dia < aux.dia))
+    {
+        idade--;
+    }
+
+    return idade;
+
+}
+
+
 int main()
 {
-
+    setlocale(LC_ALL, "Portuguese");
     Fila *normal = CriaFila(), *emer = CriaFila(), *atendidos = CriaFila();
     int opcao, id;
     pet aux, cad;
-    setlocale(LC_ALL,"Portuguese");
     srand(time(NULL));
     printf("\n\n\n\n\t\t\t\t=============================================\n");
     printf("\t\t\t\t        BEM-VINDO(A) À CLÍNICA VETERINÁRIA    \n");
-    printf("\t\t\t\t                *** JujuVet ***               \n");
+    printf("\t\t\t\t                    JujuVet                   \n");
     printf("\t\t\t\t=============================================\n");
     printf("\n");
     printf(" \t\t\t\tCuidando do seu pet com amor e dedicação!\n\n\n\n");
@@ -245,12 +259,12 @@ int main()
             printf("Digite o nome do animal: ");
             gets(cad.nome);
 
+            for (int i = 0; i < strlen(cad.nome); i++)
+            {
+                cad.nome[i]=tolower(cad.nome[i]);
+            }
             printf("Digite a especie do animal: ");
             gets(cad.especie);
-
-            printf("Digite a idade do animal: ");
-            scanf("%d", &cad.idade);
-
             printf("Digite a data de nascimento:\n");
             printf("Dia: ");
             scanf("%d", &cad.nas.dia);
@@ -258,6 +272,9 @@ int main()
             scanf("%d", &cad.nas.mes);
             printf("Ano: ");
             scanf("%d", &cad.nas.ano);
+            cad.idade=idade(cad.nas);
+            printf("Idade:%d\n",cad.idade);
+
             printf("Digite a prioridade (0 - Normal | 1 - Urgente): ");
             scanf("%d", &cad.prioridade);
             if (cad.prioridade)
@@ -319,8 +336,6 @@ int main()
             imprimirFilas(normal, emer);
             break;
 
-
-
         case 5:
             fflush(stdin);
             system("cls");
@@ -331,11 +346,13 @@ int main()
             }
             else
             {
-                if(!VaziaFila(emer))
+                if (!VaziaFila(emer))
                 {
                     printf("%-5d | %-15s | %-10s | %-5d | Urgente\n",
                            emer->ini->dados.id, emer->ini->dados.nome, emer->ini->dados.especie, emer->ini->dados.idade);
-                }else{
+                }
+                else
+                {
                     printf("%-5d | %-15s | %-10s | %-5d | Normal\n",
                            normal->ini->dados.id, normal->ini->dados.nome, normal->ini->dados.especie, normal->ini->dados.idade);
                 }
